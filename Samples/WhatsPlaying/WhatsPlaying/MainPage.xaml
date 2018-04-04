@@ -1,0 +1,85 @@
+﻿<Page
+    x:Class="WhatsPlaying.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WhatsPlaying"
+    xmlns:appmodel="using:Windows.ApplicationModel"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid Background="{ThemeResource SystemControlChromeMediumAcrylicWindowMediumBrush}">
+        <NavigationView x:Name="MainContent" 
+                        AlwaysShowHeader="False" 
+                        IsSettingsVisible="False"
+                        SelectionChanged="OnSelectionChanged">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Home" Tag="home">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE10F;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItemSeparator/>
+                
+                <NavigationViewItem Content="What's playing now?" Tag="movies_now" >
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE8B2;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Opening this month" Tag="movies_month" >
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE8B2;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Most popular last year" Tag="movies_popular">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE8B2;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Highest rated last year" Tag="movies_rated">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE8B2;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+
+            <Frame x:Name="ContentFrame">
+                <Frame.Background>
+                    <ImageBrush ImageSource="Assets/main-background.jpg" Stretch="UniformToFill"/>
+                </Frame.Background>
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition />
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+        </NavigationView>
+
+        <Grid x:Name="AppTitleBar" Background="Transparent" VerticalAlignment="Top" >
+            <!-- Width of the padding column is set in LayoutMetricsChanged handler. -->
+            <!-- Using a padding column instead of Margin ensures that the background paints  -->
+            <!-- the area under the caption control buttons (for transparent buttons). -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftPaddingColumn" Width="0"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Adds a gradient tint so the app back button can be seen on light backgrounds. -->
+            <Rectangle x:Name="BackButtonBackground" 
+                       Grid.Column="0" 
+                       Grid.ColumnSpan="2"
+                       Visibility="Collapsed">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
+                        <GradientStop Color="#3F000000"/>
+                        <GradientStop Color="Transparent" Offset="0.2"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            
+            <TextBlock Text="{x:Bind appmodel:Package.Current.DisplayName}" 
+                       Grid.Column="1" 
+                       Style="{StaticResource CaptionTextBlockStyle}" 
+                       Margin="8,8,0,0"/>
+        </Grid>
+    </Grid>
+</Page>
